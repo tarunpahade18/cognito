@@ -1,8 +1,8 @@
 import { motion } from "framer-motion";
-import { Plus, MessageSquare, Trash2 } from "lucide-react";
+import { Plus, MessageSquare, Trash2, Server, Sparkles, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Conversation } from "@/types/chat";
+import { Conversation, AIProvider } from "@/types/chat";
 import { cn } from "@/lib/utils";
 
 interface ConversationSidebarProps {
@@ -12,6 +12,12 @@ interface ConversationSidebarProps {
   onNewConversation: () => void;
   onDeleteConversation: (id: string) => void;
 }
+
+const providerIcons: Record<AIProvider, React.ReactNode> = {
+  ollama: <Server className="h-3 w-3" />,
+  openai: <Sparkles className="h-3 w-3" />,
+  lovable: <Zap className="h-3 w-3" />,
+};
 
 export function ConversationSidebar({
   conversations,
@@ -23,12 +29,12 @@ export function ConversationSidebar({
   const groupedConversations = groupByDate(conversations);
 
   return (
-    <div className="flex flex-col h-full bg-sidebar">
+    <div className="flex flex-col h-full glass-sidebar">
       {/* Header */}
       <div className="p-4 border-b border-sidebar-border">
         <Button
           onClick={onNewConversation}
-          className="w-full gap-2 bg-primary/10 hover:bg-primary/20 text-primary border-0"
+          className="w-full gap-2 bg-primary/10 hover:bg-primary/20 text-primary border-0 rounded-xl"
           variant="outline"
         >
           <Plus className="h-4 w-4" />
@@ -55,13 +61,20 @@ export function ConversationSidebar({
                     <button
                       onClick={() => onSelectConversation(conversation.id)}
                       className={cn(
-                        "w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-left transition-colors",
+                        "w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left transition-all",
                         activeConversationId === conversation.id
-                          ? "bg-sidebar-accent text-sidebar-accent-foreground"
+                          ? "glass-card border-primary/30 text-foreground"
                           : "text-sidebar-foreground hover:bg-sidebar-accent/50"
                       )}
                     >
-                      <MessageSquare className="h-4 w-4 shrink-0 text-muted-foreground" />
+                      <div className={cn(
+                        "shrink-0 p-1.5 rounded-lg",
+                        activeConversationId === conversation.id
+                          ? "bg-primary/20 text-primary"
+                          : "bg-muted/50 text-muted-foreground"
+                      )}>
+                        {conversation.provider ? providerIcons[conversation.provider] : <MessageSquare className="h-3 w-3" />}
+                      </div>
                       <span className="truncate text-sm">
                         {conversation.title || "New conversation"}
                       </span>
@@ -85,7 +98,8 @@ export function ConversationSidebar({
 
           {conversations.length === 0 && (
             <div className="px-3 py-8 text-center text-muted-foreground text-sm">
-              No conversations yet
+              <MessageSquare className="h-8 w-8 mx-auto mb-2 opacity-50" />
+              <p>No conversations yet</p>
             </div>
           )}
         </div>

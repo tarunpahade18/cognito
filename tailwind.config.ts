@@ -58,7 +58,13 @@ export default {
           ring: "hsl(var(--sidebar-ring))",
         },
         glass: "hsl(var(--glass))",
+        "glass-border": "hsl(var(--glass-border))",
+        "glass-highlight": "hsl(var(--glass-highlight))",
         glow: "hsl(var(--glow))",
+        "glow-soft": "hsl(var(--glow-soft))",
+        ollama: "hsl(var(--ollama))",
+        openai: "hsl(var(--openai))",
+        lovable: "hsl(var(--lovable))",
       },
       borderRadius: {
         lg: "var(--radius)",
