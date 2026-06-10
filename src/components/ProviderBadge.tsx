@@ -1,6 +1,6 @@
 import { AIProvider } from "@/types/chat";
 import { cn } from "@/lib/utils";
-import { Server, Sparkles, Zap } from "lucide-react";
+import { Server, Sparkles } from "lucide-react";
 
 interface ProviderBadgeProps {
   provider: AIProvider;
@@ -18,11 +18,6 @@ export function ProviderBadge({ provider, className }: ProviderBadgeProps) {
       label: "OpenAI",
       icon: Sparkles,
       className: "provider-openai",
-    },
-    lovable: {
-      label: "Lovable AI",
-      icon: Zap,
-      className: "provider-lovable",
     },
   };
 

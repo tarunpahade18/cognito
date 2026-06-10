@@ -96,7 +96,7 @@ async function extractTextFromPDF(arrayBuffer: ArrayBuffer): Promise<string> {
   if (textMatches) {
     text = textMatches
       .map((m) => m.slice(1, -1))
-      .filter((t) => t.length > 2 && !/^[\x00-\x1f]+$/.test(t))
+      .filter((t) => t.length > 2 && !Array.from(t).every((char) => char.charCodeAt(0) <= 31))
       .join(" ");
   }
   

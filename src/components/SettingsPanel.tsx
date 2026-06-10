@@ -35,12 +35,6 @@ const providers: { id: AIProvider; name: string; description: string; icon: Reac
     description: "Use GPT-4, GPT-4o and other OpenAI models",
     icon: <Sparkles className="h-5 w-5" />,
   },
-  {
-    id: "lovable",
-    name: "Lovable AI",
-    description: "Built-in AI powered by Gemini & GPT",
-    icon: <Sparkles className="h-5 w-5" />,
-  },
 ];
 
 export function SettingsPanel({ settings, onUpdate }: SettingsPanelProps) {
@@ -193,27 +187,6 @@ export function SettingsPanel({ settings, onUpdate }: SettingsPanelProps) {
                   placeholder="gpt-4o-mini"
                   className="mt-1.5 bg-input/50"
                 />
-              </div>
-            </motion.div>
-          )}
-
-          {/* Lovable AI Info */}
-          {settings.provider === "lovable" && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
-              className="p-4 rounded-xl bg-lovable/10 border border-lovable/20"
-            >
-              <div className="flex items-start gap-3">
-                <Sparkles className="h-5 w-5 text-lovable mt-0.5" />
-                <div>
-                  <p className="font-medium text-sm">Lovable AI</p>
-                  <p className="text-xs text-muted-foreground mt-1">
-                    No API key required! Uses Gemini and GPT models through our
-                    secure gateway. Perfect for getting started.
-                  </p>
-                </div>
               </div>
             </motion.div>
           )}

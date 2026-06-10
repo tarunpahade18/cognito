@@ -4,7 +4,7 @@ import { AppSettings, AIProvider } from "@/types/chat";
 const SETTINGS_KEY = "ai-assistant-settings";
 
 const defaultSettings: AppSettings = {
-  provider: "lovable",
+  provider: "ollama",
   ollamaUrl: "http://localhost:11434",
   ollamaModel: "llama3.2",
   openaiApiKey: "",
@@ -16,7 +16,10 @@ export function useSettings() {
     try {
       const stored = localStorage.getItem(SETTINGS_KEY);
       if (stored) {
-        return { ...defaultSettings, ...JSON.parse(stored) };
+        const parsed = { ...defaultSettings, ...JSON.parse(stored) } as AppSettings;
+        return parsed.provider === "openai" || parsed.provider === "ollama"
+          ? parsed
+          : defaultSettings;
       }
     } catch {
       console.error("Failed to load settings");

@@ -1,8 +1,6 @@
 import { useState, useCallback } from "react";
 import { Message, Conversation, AIProvider, AppSettings } from "@/types/chat";
 
-const LOVABLE_CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/chat`;
-
 interface UseChatOptions {
   settings: AppSettings;
   pdfContext?: string;
@@ -134,65 +132,6 @@ export function useChat({ settings, pdfContext }: UseChatOptions) {
     }
   };
 
-  const streamLovable = async (
-    messages: { role: string; content: string }[],
-    onDelta: (text: string) => void
-  ) => {
-    const response = await fetch(LOVABLE_CHAT_URL, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
-      },
-      body: JSON.stringify({ messages }),
-    });
-
-    if (!response.ok) {
-      if (response.status === 429) {
-        throw new Error("Rate limit exceeded. Please try again later.");
-      }
-      if (response.status === 402) {
-        throw new Error("Usage limit reached. Please add credits.");
-      }
-      throw new Error(`Lovable AI error: ${response.status}`);
-    }
-
-    const reader = response.body?.getReader();
-    if (!reader) throw new Error("No response body");
-
-    const decoder = new TextDecoder();
-    let buffer = "";
-
-    while (true) {
-      const { done, value } = await reader.read();
-      if (done) break;
-
-      buffer += decoder.decode(value, { stream: true });
-
-      let newlineIndex: number;
-      while ((newlineIndex = buffer.indexOf("\n")) !== -1) {
-        let line = buffer.slice(0, newlineIndex);
-        buffer = buffer.slice(newlineIndex + 1);
-
-        if (line.endsWith("\r")) line = line.slice(0, -1);
-        if (line.startsWith(":") || line.trim() === "") continue;
-        if (!line.startsWith("data: ")) continue;
-
-        const jsonStr = line.slice(6).trim();
-        if (jsonStr === "[DONE]") return;
-
-        try {
-          const parsed = JSON.parse(jsonStr);
-          const delta = parsed.choices?.[0]?.delta?.content;
-          if (delta) onDelta(delta);
-        } catch {
-          buffer = line + "\n" + buffer;
-          break;
-        }
-      }
-    }
-  };
-
   const sendMessage = useCallback(
     async (content: string, screenContext?: string) => {
       let conversationId = activeConversationId;
@@ -291,9 +230,8 @@ export function useChat({ settings, pdfContext }: UseChatOptions) {
           case "openai":
             await streamOpenAI(messageHistory, onDelta);
             break;
-          case "lovable":
           default:
-            await streamLovable(messageHistory, onDelta);
+            await streamOllama(messageHistory, onDelta);
             break;
         }
 

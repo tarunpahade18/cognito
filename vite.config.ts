@@ -1,11 +1,11 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import path from "path";
-import { componentTagger } from "lovable-tagger";
 import { VitePWA } from "vite-plugin-pwa";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
+  base: "./",
   server: {
     host: "::",
     port: 8080,
@@ -15,14 +15,13 @@ export default defineConfig(({ mode }) => ({
   },
   plugins: [
     react(),
-    mode === "development" && componentTagger(),
     VitePWA({
       registerType: "autoUpdate",
       includeAssets: ["favicon.ico", "robots.txt"],
       manifest: {
-        name: "AI Desktop Assistant",
-        short_name: "AI Assistant",
-        description: "Your intelligent desktop assistant with vision and voice capabilities",
+        name: "Visionary Aide",
+        short_name: "Visionary Aide",
+        description: "An open-source AI assistant with chat, PDF context, voice, and local model support.",
         theme_color: "#0f172a",
         background_color: "#0f172a",
         display: "standalone",

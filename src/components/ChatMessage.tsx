@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import ReactMarkdown from "react-markdown";
-import { User, Server, Sparkles, Zap } from "lucide-react";
+import { User, Server, Sparkles } from "lucide-react";
 import { Message, AIProvider } from "@/types/chat";
 import { cn } from "@/lib/utils";
 
@@ -11,12 +11,11 @@ interface ChatMessageProps {
 const providerConfig: Record<AIProvider, { icon: React.ElementType; color: string }> = {
   ollama: { icon: Server, color: "text-ollama" },
   openai: { icon: Sparkles, color: "text-foreground" },
-  lovable: { icon: Zap, color: "text-lovable" },
 };
 
 export function ChatMessage({ message }: ChatMessageProps) {
   const isUser = message.role === "user";
-  const provider = message.provider || "lovable";
+  const provider = message.provider || "ollama";
   const { icon: ProviderIcon, color } = providerConfig[provider];
 
   return (

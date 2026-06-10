@@ -1,4 +1,4 @@
-export type AIProvider = "ollama" | "openai" | "lovable";
+export type AIProvider = "ollama" | "openai";
 
 export interface Message {
   id: string;

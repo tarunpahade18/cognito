@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import tailwindcssAnimate from "tailwindcss-animate";
 
 export default {
   darkMode: ["class"],
@@ -64,7 +65,6 @@ export default {
         "glow-soft": "hsl(var(--glow-soft))",
         ollama: "hsl(var(--ollama))",
         openai: "hsl(var(--openai))",
-        lovable: "hsl(var(--lovable))",
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -102,5 +102,5 @@ export default {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [tailwindcssAnimate],
 } satisfies Config;

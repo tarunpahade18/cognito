@@ -57,7 +57,6 @@
     /* Provider colors */
     --ollama: 148 60% 45%;
     --openai: 0 0% 100%;
-    --lovable: 280 80% 60%;
   }
 
   .light {
@@ -248,12 +247,6 @@
     background: hsl(var(--openai) / 0.1);
     border-color: hsl(var(--openai) / 0.2);
     color: hsl(var(--openai));
-  }
-
-  .provider-lovable {
-    background: hsl(var(--lovable) / 0.15);
-    border-color: hsl(var(--lovable) / 0.3);
-    color: hsl(var(--lovable));
   }
 
   /* Hover transitions */

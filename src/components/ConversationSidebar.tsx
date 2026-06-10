@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Plus, MessageSquare, Trash2, Server, Sparkles, Zap } from "lucide-react";
+import { Plus, MessageSquare, Trash2, Server, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Conversation, AIProvider } from "@/types/chat";
@@ -16,7 +16,6 @@ interface ConversationSidebarProps {
 const providerIcons: Record<AIProvider, React.ReactNode> = {
   ollama: <Server className="h-3 w-3" />,
   openai: <Sparkles className="h-3 w-3" />,
-  lovable: <Zap className="h-3 w-3" />,
 };
 
 export function ConversationSidebar({

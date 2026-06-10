@@ -84,7 +84,7 @@ export function useOllama(baseUrl: string = "http://localhost:11434") {
           if (!line.trim()) continue;
           try {
             const data = JSON.parse(line);
-            if (data.total && data.completed) {
+            if (data.total !== undefined && data.completed !== undefined) {
               const progress = Math.round((data.completed / data.total) * 100);
               setDownloadProgress((prev) => ({ ...prev, [modelName]: progress }));
             }
@@ -95,12 +95,19 @@ export function useOllama(baseUrl: string = "http://localhost:11434") {
                 return updated;
               });
               await refreshModels();
+              return;
             }
           } catch {
             // Ignore parsing errors
           }
         }
       }
+
+      setDownloadProgress((prev) => {
+        const updated = { ...prev };
+        delete updated[modelName];
+        return updated;
+      });
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to pull model");
       setDownloadProgress((prev) => {
