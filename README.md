@@ -1,4 +1,6 @@
-# Visionary Aide
+# Cognito
+
+![Cognito](public/image.png)
 
 Visionary Aide is an open-source AI assistant built with React, Vite, TypeScript, Tailwind CSS, shadcn/ui, Supabase Edge Functions, and optional local Ollama models.
 
